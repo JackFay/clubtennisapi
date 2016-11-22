@@ -28,9 +28,9 @@ initializeDb( db => {
 	// api router
 	app.use('/api', api({ config, db }));
 
-	app.server.listen(process.env.PORT || config.port);
+	app.server.listen(5000);
 
-	console.log(`Started on port ${app.server.address().port}`);
+	console.log(`Started on port 5000`);
 });
 
 export default app;

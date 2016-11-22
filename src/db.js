@@ -17,5 +17,5 @@ export default callback => {
       console.log('connected as id ' + connection.threadId);
     });
     
-	callback();
+	callback(connection);
 }
