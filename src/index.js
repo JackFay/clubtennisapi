@@ -5,7 +5,9 @@ import bodyParser from 'body-parser';
 import initializeDb from './db';
 import middleware from './middleware';
 import api from './api';
+import protectedApi from './api/protected';
 import config from './config.json';
+import expressJwt from "express-jwt";
 
 let app = express();
 app.server = http.createServer(app);
@@ -27,8 +29,9 @@ initializeDb( db => {
 
 	// api router
 	app.use('/api', api({ config, db }));
+    app.use('/api/protected', protectedApi({config ,db}))
 
-	app.server.listen(5000);
+    app.server.listen(5000);
 
 	console.log(`Started on port 5000`);
 });

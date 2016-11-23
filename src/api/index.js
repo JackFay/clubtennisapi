@@ -1,6 +1,8 @@
 import { version } from '../../package.json';
 import { Router } from 'express';
 import facets from './facets';
+import jwt from "jsonwebtoken";
+
 
 export default ({ config, db }) => {
 	let api = Router();
@@ -26,21 +28,6 @@ export default ({ config, db }) => {
         })
     });
     
-    api.post('/events', (req, res) => {
-        console.log(req.body)
-        const events = req.body
-        const postEventsQuery = "INSERT INTO events SET ?";
-        
-        db.query(postEventsQuery, req.body, (err, result) => {
-            if(err){
-                console.log(err);
-                res.send(err);
-            }else{
-                console.log(result);
-                res.send("successfully added event(s)");
-            }
-        });
-    });
     
     api.get('/players', (req, res) => {
         const getPlayersQuery = "SELECT * FROM players";
@@ -55,17 +42,28 @@ export default ({ config, db }) => {
         });
     });
     
-    api.post('/players', (req, res) => {
-        const players = req.body;
-        const postPlayersQuery = "INSERT INTO players SET ?";
+    api.post('/login', (req, res) => {
+        console.log(req.body)
+        const {username, hash} = req.body;
+        const getLoginQuery = "SELECT * FROM users WHERE username=\'" + username + "\' and hash=\'" + hash + "\'";
         
-        db.query(postPlayersQuery, players, (err, result) => {
+        db.query(getLoginQuery, (err, rows, fields) => {
             if(err){
                 console.log(err);
-                res.send(err);
+                res.send("fail")
             }else{
-                console.log(result);
-                res.send("successfully added player(s)")
+                if(rows.length == 1){
+                    const user = {
+                        first_name: rows[0].first_name,
+                        id: rows[0].user_id
+                    }
+                    const secret = "secret";
+                    const token = jwt.sign(user, secret)
+                    
+                    res.json({token: token, expiresInMinutes: 60*5});
+                }else{
+                    res.send("incorrect username or password")
+                }
             }
         })
     })
