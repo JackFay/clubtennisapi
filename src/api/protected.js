@@ -43,6 +43,32 @@ export default ({ config, db }) => {
             }
         })
     })
+    
+    protectedApi.post('/players/delete', (req, res) => {
+        const playerId = req.body.id;
+        const deletePlayerQuery = "DELETE FROM players WHERE id=" + playerId;
+        
+        db.query(deletePlayerQuery, (err, result) => {
+            if(err){
+                console.log(err)
+            }else{
+                res.send("successfully deleted player")
+            }
+        })
+    })
+    
+    protectedApi.post('/events/delete', (req, res) => {
+        const eventId = req.body.id;
+        const deleteEventQuery = "DELETE FROM events WHERE id=" + eventId;
+        
+        db.query(deleteEventQuery, (err, result) => {
+            if(err){
+                console.log(err)
+            }else{
+                res.send("successfully deleted player")
+            }
+        })
+    })
 
 	return protectedApi;
 }
