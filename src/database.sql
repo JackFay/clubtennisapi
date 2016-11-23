@@ -25,3 +25,5 @@ create table players (
     high_school varchar(60) null,
     PRIMARY KEY (id)
 )
+
+INSERT INTO users VALUES (1, 'Jack', 'Fay', 'jack', 'test');

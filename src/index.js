@@ -22,7 +22,7 @@ app.use(bodyParser.json({
 }));
 
 app.use(express.static('dist/'));
-
+app.use(express.static('images/'));
 app.get('/', (req, res) => {
     res.sendFile('/dist/index.html')
 })
