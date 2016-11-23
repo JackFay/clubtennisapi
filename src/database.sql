@@ -15,3 +15,13 @@ CREATE TABLE users (
   hash VARCHAR(50) NOT NULL,
   PRIMARY KEY (user_id)
 );
+
+create table players (
+    id integer auto_increment,
+    first_name varchar(50) not null,
+    last_name varchar(50) not null,
+    year varchar(10) not null,
+    hometown varchar(30) null,
+    high_school varchar(60) null,
+    PRIMARY KEY (id)
+)

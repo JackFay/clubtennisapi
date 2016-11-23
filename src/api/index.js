@@ -41,6 +41,34 @@ export default ({ config, db }) => {
             }
         });
     });
+    
+    api.get('/players', (req, res) => {
+        const getPlayersQuery = "SELECT * FROM players";
+        
+        db.query(getPlayersQuery, (err, rows, fields) => {
+            if(err){
+                console.log(err)
+                res.send(err)
+            }else{
+                res.send(rows)
+            }
+        });
+    });
+    
+    api.post('/players', (req, res) => {
+        const players = req.body;
+        const postPlayersQuery = "INSERT INTO players SET ?";
+        
+        db.query(postPlayersQuery, players, (err, result) => {
+            if(err){
+                console.log(err);
+                res.send(err);
+            }else{
+                console.log(result);
+                res.send("successfully added player(s)")
+            }
+        })
+    })
 
 	return api;
 }
