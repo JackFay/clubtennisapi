@@ -17,6 +17,7 @@ export default ({ config, db }) => {
         const events = req.body
         const postEventsQuery = "INSERT INTO events SET ?";
         
+        
         db.query(postEventsQuery, req.body, (err, result) => {
             if(err){
                 console.log(err);
@@ -64,8 +65,9 @@ export default ({ config, db }) => {
         db.query(deleteEventQuery, (err, result) => {
             if(err){
                 console.log(err)
+                res.send(err)
             }else{
-                res.send("successfully deleted player")
+                res.send("successfully deleted event")
             }
         })
     })
