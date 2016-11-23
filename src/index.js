@@ -21,6 +21,12 @@ app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
 
+app.use(express.static('dist/'));
+
+app.get('/', (req, res) => {
+    res.sendFile('/dist/index.html')
+})
+
 // connect to db
 initializeDb( db => {
 
